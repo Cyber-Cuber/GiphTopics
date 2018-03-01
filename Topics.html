@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Giphy Topics</title>
+</head>
+<body>
+    
+        <button data- = "">
+            
+        </button>
+
+
+        <div class="container">
+                <h1>Topics</h1>
+                
+         <div id="choice-view"></div>
+
+            <form id="topic-form">
+            <label for="topic-input">Search for the topic</label>
+            <input type="text" id="topic-input"><br>
+                    
+            
+            <input id="choice" type="submit" value="choice">
+            </form>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        
+        for (i=0; i<topics.length; i++) {
+	        var newButton = $("<button>").text(topics[i]);
+	        newButton.attr("class", "btn btn-default choice");
+	        newButton.attr("data-choice", topics[i]);
+	        $("#choiceButtons").append(newButton);  
+
+        $("button").on("click", function() {
+    
+          var choice = $(this).attr("data-choice");
+
+          var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+          topics + "v1/gifs/?api_key=sZnaTcLurifSWZ9YehG1Q0kdmYQI8PPX";
+      
+          var topics = ["Bruce Lee", "snow ski", "unbelievable", "epic bike mountain", 
+            "Tim Conway", "rowing crew", "Egypt", "", "", "" ]        
+
+          $.ajax({
+            url: queryURL,
+            method: 'GET'
+          }).then(function(response) {
+            console.log(response);
+            var results = response.data;
+
+          
+          for (var i = 0; i < results.length; i++) {
+
+            
+            if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+              
+              var gifDiv = $("<div class='item'>");
+
+              
+              var rating = results[i].rating;
+
+              
+              var p = $("<p>").text("Rating: " + rating);
+
+              
+              var choiceImage = $("<img>");
+
+              
+              choiceImage.attr("src", results[i].images.fixed_height.url);
+
+              
+              gifDiv.append(p);
+              gifDiv.append(choiceImage);
+
+              
+              $("#choice-view").prepend(gifDiv);
+            }
+          }
+        });
+          
+
+        </script>
+    
+</body>
+
+</html>
